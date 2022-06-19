@@ -1,0 +1,9 @@
+<?php
+$date=date('Y-m-d'); //creating object to database contents
+$uid=$_SESSION['id'];
+$totalprice=$_GET['sub'];
+$stmt=$admin->Rcud("INSERT INTO `order`(`date`,`customerid`,`totalprice`)
+VALUES ('".$date."','".$uid."','".$totalprice."')","saved");
+echo "<script>alert('Your order has been placed');</script>";
+$admin->redirect('../payment.php?orderid='.$stmt);
+?>
