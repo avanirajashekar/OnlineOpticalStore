@@ -1,0 +1,21 @@
+<h2>View Order</h2>
+<table border='1' id="example" class="table table-striped">
+<tr>
+<th>Order id</th>
+<th>Date</th>
+<th>Total price</th>
+<th>Status</th>
+</tr>
+<?php
+
+$stmt = $admin->ret("SELECT * FROM `order`");
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+?>
+<tr>
+<td class="table-success"><?php echo $row['orderid']; ?></td>
+<td class="table-info"><?php echo $row['date']; ?></td>
+<td class="table-info"><?php echo $row['totalprice']; ?></td>
+<td class="table-info"><?php echo $row['status']; ?></td>
+</tr>
+<?php } ?>
+</table>

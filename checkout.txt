@@ -1,0 +1,44 @@
+<?php
+if($_SESSION['id']==false)
+{
+$i=1;
+$code=$_GET['customerid'];
+$stmt=$admin->ret("SELECT * FROM `cart` inner join `product` on
+`product`.prid=`cart`.prid and `cart`.customerid=".$code);
+}
+else
+{
+$i=1;
+$id=$_SESSION['id'];
+
+$stmt=$admin->ret("SELECT * FROM `cart` inner join `product` on
+
+`product`.prid=`cart`.prid where `cart`.customerid=".$id);
+
+}
+
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+?>
+<td class="invert"><?php echo $i++;?></td>
+<td class="invert-image"><a href="single.php"><img title="" alt=""style="height:50px;
+width:50px;" src="../Admin/upload/<?php echo $row['image'];?>" /></a></td>
+<td class="invert">
+<div class="quantity">
+<div class="quantity-select">
+<div><span><?php echo $row['quantity'];?></span></div>
+</div>
+</div>
+</td>
+<td class="invert"><?php echo $row['categoryname'];?></td>
+<td class="price"><?php echo $row['price'];?></td>
+<td class="total"><?php echo $row['totalprice'];?></td>
+<td class="invert">
+<div class="rem">
+<a href="controller/delete.php?cartid=<?php echo $row['cartid']; ?>" OnClick="return
+confirm('are you sure')"><div class="close1"></div><i class="fa fa-close"></i></a>
+</div>
+</td>
+</tr>
+<?php }?>
+
+</body></table>
