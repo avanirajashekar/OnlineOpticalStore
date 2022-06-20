@@ -1,0 +1,76 @@
+<?php
+if(isset($_POST['submit']))
+{
+$method=$_POST['method'];
+if($method=="cash")
+{
+$id=$_SESSION['id'];
+$amount=$_POST['amount'];
+$date=date('Y-m-d');
+$address=$_POST['address'];
+$method=$_POST['method'];
+$orderid=$_POST['o_id'];
+
+$stmt=$admin->cud("INSERT INTO `payment`(`customerid`,`amount`, `date`, `address`,
+`method`,`orderid`) VALUES
+('".$id."','".$amount."','".$date."','".$address."','".$method."','".$orderid."')","saved");
+echo "<script>alert('data saved');</script>";
+$admin->redirect('../index');
+}
+else
+{
+$id=$_SESSION['id'];
+$amount=$_POST['amount'];
+$date=date('Y-m-d');
+
+$address=$_POST['address'];
+$method=$_POST['method'];
+$cardno=$_POST['cardno'];
+$cvv=$_POST['cvv'];
+$cardholder=$_POST['cardholder'];
+$expirydate=$_POST['expirydate'];
+$orderid=$_POST['o_id'];
+
+$stmt=$admin->cud("INSERT INTO `payment`(`customerid`,`amount`, `date`,
+`address`,`method`, `cardno`, `cvv`, `cardholder`, `expirydate`, `orderid`) VALUES
+('".$id."','".$amount."','".$date."','".$address."','".$method."','".$cardno."','".$cvv."','".$cardholder.
+"','".$expirydate."','".$orderid."')","saved");
+echo "<script>alert('data saved');</script>";
+$admin->redirect('../index');
+}
+}
+?>
+6.6.2 View Payment Details:
+<h2>View Payment</h2>
+<table border='1' id="example" class="table table-striped">
+<tr>
+<th>Sl no</th>
+<th>amount</th>
+<th>date</th>
+<th>address</th>
+<th>method</th>
+<th>cardno</th>
+
+<th>cvv</th>
+<th>Cardholder</th>
+<th>expiry date</th>
+<th>status</th>
+</tr>
+<?php
+$stmt = $admin->ret("SELECT * FROM `payment`");
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+?>
+<tr>
+<td class="table-success"><?php echo $row['paymentid']; ?></td>
+<td class="table-info"><?php echo $row['amount']; ?></td>
+<td class="table-info"><?php echo $row['date']; ?></td>
+<td class="table-danger"><?php echo $row['address']; ?></td>
+<td class="table-default"><?php echo $row['method']; ?></td>
+<td class="table-warning"><?php echo $row['cardno']; ?></td>
+<td class="table-warning"><?php echo $row['cvv']; ?></td>
+<td class="table-warning"><?php echo $row['cardholder']; ?></td>
+<td class="table-warning"><?php echo $row['expirydate']; ?></td>
+<td class="table-warning"><?php echo $row['status']; ?></td>
+</tr>
+<?php } ?>
+</table>
